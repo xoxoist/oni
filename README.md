@@ -202,8 +202,8 @@ func main() {
     // `event.notification.blast.sms.channel`
     // and previous *oni.Stream behavior should inherit to new group 
     notificationBlastEvent := consumer.Group("event.notification.blast")
-    notificationBlastEvent.Handler("email.channel", func (ctx oni.Context) {})
-    notificationBlastEvent.Handler("sms.channel", func (ctx oni.Context) {})
+    notificationBlastEvent.Handler("email.channel", func (ctx oni.Context) error {})
+    notificationBlastEvent.Handler("sms.channel", func (ctx oni.Context) error {})
     ```
 - `IConsumer.Handler(key string, handlerFunc ...HandlerFunc)`
     ```go
@@ -211,8 +211,9 @@ func main() {
     // message that produced to `event.send.email` key will be received by handler function
     // defined in this handler creation and message value and details will be propagated through
     // oni.Context
-    consumer.Handler("event.send.email", func (ctx oni.Context) {
+    consumer.Handler("event.send.email", func (ctx oni.Context) error {
         // put business logic here
+        return nil
     })
     ```
 
