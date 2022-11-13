@@ -148,5 +148,5 @@ func main() {
 }
 
 ```
-
+4. Start run `consumer/main.go` and run `producer/main.go` separately
 ### API Examples
