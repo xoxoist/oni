@@ -11,7 +11,7 @@
 [![TODOs](https://badgen.net/https/api.tickgit.com/badgen/github.com/coffeehaze/oni)](https://www.tickgit.com/browse?repo=github.com/coffeehaze/oni)
 
 Oni is Kafka Framework written in Go (Golang). that makes you easy to consume and produce kafka messages using robust
-API wrapper using [kafka-go](https://github.com/segmentio/kafka-go) thanks to [segmentio](https://github.com/segmentio).
+API wrapper for [kafka-go](https://github.com/segmentio/kafka-go) thanks to [segmentio](https://github.com/segmentio).
 the usage most likely same with Gin / Echo web framework.
 
 Oni Mask art by [@inksyndromeartwork](https://www.freepik.com/author/inksyndromeartwork)
