@@ -32,7 +32,7 @@ Oni Mask art by [@inksyndromeartwork](https://www.freepik.com/author/inksyndrome
 go version
 ```
 
-2. Get Oni Framework
+2. Get oni and kafka-go
 
 ```sh
 go get -u github.com/coffeehaze/oni
