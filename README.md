@@ -23,6 +23,9 @@ Oni Mask art by [@inksyndromeartwork](https://www.freepik.com/author/inksyndrome
     - [Installation](#installation)
     - [Quick Start](#quick-start)
     - [API Examples](#api-examples)
+        - [Stream](#stream)
+        - [Consumer](#consumer)
+        - [Context](#consumer)
 
 ### Installation
 
@@ -115,7 +118,9 @@ func main() {
 }
 
 ```
+
 3. Create package `producer` and create `main.go` file and place this code to it
+
 ```go
 package main
 
@@ -148,5 +153,28 @@ func main() {
 }
 
 ```
+
 4. Start run `consumer/main.go` and run `producer/main.go` separately
+
 ### API Examples
+
+### Stream
+
+- `oni.NewStream(cfg kafka.ReaderConfig)`
+    ```go
+    // example for oni.NewStream(cfg kafka.ReaderConfig)
+    stream := oni.NewStream(kafka.ReaderConfig{
+        Brokers: []string{"localhost:8097"},
+        Topic: "foos",
+    })
+    ```
+
+### Consumer
+
+- `oni.NewConsumer(stream *oni.Stream)`
+    ```go
+    // example for oni.NewConsumer(stream *oni.Stream)
+    consumer := oni.NewConsumer(stream)
+    ```
+
+### Context
