@@ -192,7 +192,7 @@ func main() {
     consumer.Explicit()
     ```
   
-- `IConsumer.Group(keyGroup string) *Consumer`
+- `IConsumer.Group(keyGroup string) *IConsumer`
     ```go
     // create new group of consumer key event prefix, for example `event.notification.blast`
     // could be had last suffix like `email.channel` and `sms.channel` so your next handler
