@@ -161,12 +161,12 @@ func main() {
 ### Stream
 
 - `oni.NewStream(cfg kafka.ReaderConfig)`
-  ```go
-      // example for oni.NewStream(cfg kafka.ReaderConfig)
-      stream := oni.NewStream(kafka.ReaderConfig{
-          Brokers: []string{"localhost:8097"},
-          Topic: "foos",
-      })
+    ```go
+    // example for oni.NewStream(cfg kafka.ReaderConfig)
+    stream := oni.NewStream(kafka.ReaderConfig{
+        Brokers: []string{"localhost:8097"},
+        Topic: "foos",
+    })
     ```
 
 ### Consumer
@@ -191,7 +191,7 @@ func main() {
     // this function should be called before handler creation
     consumer.Explicit()
     ```
-  
+
 - `IConsumer.Group(keyGroup string) *IConsumer`
     ```go
     // create new group of consumer key event prefix, for example `event.notification.blast`
@@ -204,6 +204,16 @@ func main() {
     notificationBlastEvent := consumer.Group("event.notification.blast")
     notificationBlastEvent.Handler("email.channel", func (ctx oni.Context) {})
     notificationBlastEvent.Handler("sms.channel", func (ctx oni.Context) {})
+    ```
+- `IConsumer.Handler(key string, handlerFunc ...HandlerFunc)`
+    ```go
+    // create handler function for specific key event, for this example is `event.send.email`
+    // message that produced to `event.send.email` key will be received by handler function
+    // defined in this handler creation and message value and details will be propagated through
+    // oni.Context
+    consumer.Handler("event.send.email", func (ctx oni.Context) {
+        // put business logic here
+    })
     ```
 
 ### Context
