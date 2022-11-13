@@ -36,6 +36,7 @@ go version
 
 ```sh
 go get -u github.com/coffeehaze/oni
+go get -u github.com/segmentio/kafka-go
 ```
 
 3. Import oni
@@ -46,5 +47,106 @@ import "github.com/coffeehaze/oni"
 
 ### Quick Start
 
+1. Create package `model` and create `foo.go` file and place this code to it
+
+```go
+package model
+
+type Foo struct {
+	FooContent string `json:"foo_content"`
+}
+```
+
+2. Create package `consumer` and create `main.go` file and place this code to it
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"github.com/coffeehaze/oni"
+	"github.com/your/projectname/model"
+	"github.com/segmentio/kafka-go"
+	"syscall"
+	"time"
+)
+
+func main() {
+	ctx := context.Background()
+	defer ctx.Done()
+
+	// initialize consumer
+	stream := oni.NewStream(kafka.ReaderConfig{
+		Brokers: []string{
+			"localhost:8097", // kafka brokers 1
+			"localhost:8098", // kafka brokers 2
+			"localhost:8099", // kafka brokers 3 you can only define one inside array
+		},
+		Topic: "foos", // topic you want to listen at
+	})
+	foosConsumer := oni.NewConsumer(stream)
+	foosConsumer.Handler(
+		"create.foo", // event key you want to map to specific handler function
+		func(ctx oni.Context) error {
+			var foo model.Foo
+			err := ctx.ShouldBindJSON(&foo) // bind message value to struct
+			if err != nil {
+				return err
+			}
+			fmt.Println(fmt.Sprintf("key=%s value=%s foo=%s", ctx.KeyString(), ctx.ValueString(), foo))
+			return nil
+		},
+	)
+
+	// initialize oni runner
+	// to help start and graceful shutdown all producer and consumer you defined
+	oniRunner := oni.Runner{
+		Context: ctx,
+		Timeout: 15 * time.Second,
+		Syscall: oni.SyscallOpt(
+			syscall.SIGINT,
+			syscall.SIGTERM,
+			syscall.SIGHUP,
+		),
+		Consumers: oni.ConsumerOpt(foosConsumer),
+	}
+	<-oniRunner.Start()
+}
+
+```
+3. Create package `producer` and create `main.go` file and place this code to it
+```go
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/your/projectname/model"
+	"github.com/segmentio/kafka-go"
+	"time"
+)
+
+func main() {
+	foos := &kafka.Writer{
+		Addr:  kafka.TCP("localhost:8097"), // kafka broker
+		Topic: "foos",                      // target topic you want to send
+	}
+
+	// create json object using json.Marshal
+	fooObj := model.Foo{
+		FooContent: fmt.Sprintf("This is new foo %d", time.Now().Unix()),
+	}
+	fooByte, _ := json.Marshal(fooObj)
+
+	err := foos.WriteMessages(context.Background(), kafka.Message{
+		Key:   []byte("create.foo"), // target event you want to send at
+		Value: fooByte,              // fooObj marshal result as the value
+	})
+	fmt.Println(err)
+}
+
+```
 
 ### API Examples
