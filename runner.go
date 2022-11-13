@@ -24,7 +24,7 @@ func ConsumerOpt(consumers ...*Consumer) []*Consumer {
 	return consumers
 }
 
-func (r *Runner) Start() <-chan struct{} {
+func (r *Runner) Start() {
 	for _, consumer := range r.Consumers {
 		go consumer.run(r.Context)
 	}
@@ -72,5 +72,5 @@ func (r *Runner) Start() <-chan struct{} {
 		close(wait)
 	}()
 
-	return wait
+	<-wait
 }

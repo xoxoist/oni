@@ -114,7 +114,7 @@ func main() {
 		),
 		Consumers: oni.ConsumerOpt(foosConsumer),
 	}
-	<-oniRunner.Start()
+	oniRunner.Start()
 }
 
 ```
@@ -244,3 +244,170 @@ func main() {
     ```
 
 ### Context
+
+- `Context.ShouldBindJSON(v interface{}) error`
+    ```go
+    func (ctx oni.Context) error {
+        var foo model.Foo
+        
+        // binding received message value into model.Foo struct
+        err := ctx.ShouldBindJSON(&foo)
+        if err != nil {
+            return err
+        }
+  
+        return nil
+    }
+    ```
+- `Context.ShouldRetryWith(producerFuncName string) error`
+    ```go
+    func (ctx oni.Context) error {
+        // send back message to `retries` topic to be re-processed in side `main` topic  
+        err := ctx.ShouldRetryWith("producer_name")
+        if err != nil {
+            return err
+        }
+  
+        return nil
+    }
+    ```
+- `Context.ShouldErrorWith(producerFuncName string) error`
+    ```go
+    func (ctx oni.Context) error {
+        // send back message to `failures` topic to be marked as invalid request format 
+        // or any system failures possible
+        err := ctx.ShouldErrorWith("producer_name")
+        if err != nil {
+            return err
+        }
+  
+        return nil
+    }
+    ```
+- `Context.ShouldReturnWith(producerFuncName string) error`
+    ```go
+    func (ctx oni.Context) error {
+        // send back message from `retries` topic to `main` topic to be re-processed
+        // this function should be called only inside `retries` topic oni.HandlerFunc 
+        err := ctx.ShouldReturnWith("producer_name")
+        if err != nil {
+            return err
+        }
+  
+        return nil
+    }
+    ```
+- `Context.Ack() error`
+    ```go
+    func (ctx oni.Context) error {
+        // ack-knowledge or commit message, this function only valid when using explicit
+        // consume mode because explicit mode doesn't automatically commit messages 
+        err := ctx.Ack()
+        if err != nil {
+            return err
+        }
+  
+        return nil
+    }
+    ```
+- `Context.ValueBytes() []byte`
+    ```go
+    func (ctx oni.Context) error {
+        // returns message value as []byte
+        ctx.ValueBytes()
+        return nil
+    }
+    ```
+
+- `Context.ValueString() string`
+    ```go
+    func (ctx oni.Context) error {
+        // returns message value as string
+        ctx.ValueString()
+        return nil
+    }
+    ```
+
+- `Context.KeyBytes() []byte`
+    ```go
+    func (ctx oni.Context) error {
+        // returns message key as []byte
+        ctx.KeyBytes()
+        return nil
+    }
+    ```
+  
+- `Context.KeyString() string`
+    ```go
+    func (ctx oni.Context) error {
+        // returns message key as string
+        ctx.KeyString()
+        return nil
+    }
+    ```
+
+- `Context.Message() kafka.Message`
+    ```go
+    func (ctx oni.Context) error {
+        // returns all message details
+        ctx.Message()
+        return nil
+    }
+    ```
+
+- `Context.ReaderStats() kafka.ReaderStats`
+    ```go
+    func (ctx oni.Context) error {
+        // returns all reader stats
+        ctx.ReaderStats()
+        return nil
+    }
+    ```
+
+- `Context.ReaderConfig() kafka.ReaderConfig`
+    ```go
+    func (ctx oni.Context) error {
+        // returns all reader configurations
+        ctx.ReaderConfig()
+        return nil
+    }
+    ```
+
+- `Context.GetProducer(producerFuncName string) *kafka.Writer`
+    ```go
+    func (ctx oni.Context) error {
+        // return find producer using its name, registered by this function
+        // IConsumer.Producer(name string, producerFunc ProducerFunc)
+        // to be used for sending message to topic you want
+        ctx.GetProducer("producer_name")
+        return nil
+    }
+    ```
+
+- `Context.OuterContext() context.Context`
+    ```go
+    func (ctx oni.Context) error {
+        // return outer context that signed in the first creation of consumer
+        // can be used for getting key-value data inside it
+        ctx.OuterContext()
+        return nil
+    }
+    ```
+
+- `Context.FindKey(key string) interface{}`
+    ```go
+    func (ctx oni.Context) error {
+        // find key inside outer context and return it as interface{}
+        ctx.FindKey("context_key_name")
+        return nil
+    }
+    ```
+
+- `Context.CreateKeyVal(key string, val interface{})`
+    ```go
+    func (ctx oni.Context) error {
+        // create key with its value into outer context
+        ctx.CreateKeyVal("key_name", "this is value put whatever you want inside here")
+        return nil
+    }
+    ```
