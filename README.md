@@ -10,6 +10,41 @@
 [![Release](https://img.shields.io/github/release/coffeehaze/oni.svg?style=flat-square)](https://github.com/coffeehaze/oni/releases)
 [![TODOs](https://badgen.net/https/api.tickgit.com/badgen/github.com/coffeehaze/oni)](https://www.tickgit.com/browse?repo=github.com/coffeehaze/oni)
 
-Oni is Kafka Framework written in Go (Golang). that makes you easy to consume and produce kafka messages using robust API wrapper using [kafka-go](https://github.com/segmentio/kafka-go) thanks to [segmentio](https://github.com/segmentio). the usage most likely same with Gin / Echo web framework.
+Oni is Kafka Framework written in Go (Golang). that makes you easy to consume and produce kafka messages using robust
+API wrapper using [kafka-go](https://github.com/segmentio/kafka-go) thanks to [segmentio](https://github.com/segmentio).
+the usage most likely same with Gin / Echo web framework.
 
 Oni Mask art by [@inksyndromeartwork](https://www.freepik.com/author/inksyndromeartwork)
+
+## Contents
+
+- [Oni Kafka Framework](#oni-kafka-framework)
+    - [Contents](#contents)
+    - [Installation](#installation)
+    - [Quick Start](#quick-start)
+    - [API Examples](#api-examples)
+
+### Installation
+
+1. Required go installed on your machine
+
+```sh
+go version
+```
+
+2. Get Oni Framework
+
+```sh
+go get -u github.com/coffeehaze/oni
+```
+
+3. Import oni
+
+```go
+import "github.com/coffeehaze/oni"
+```
+
+### Quick Start
+
+
+### API Examples
