@@ -161,12 +161,12 @@ func main() {
 ### Stream
 
 - `oni.NewStream(cfg kafka.ReaderConfig)`
-    ```go
-    // example for oni.NewStream(cfg kafka.ReaderConfig)
-    stream := oni.NewStream(kafka.ReaderConfig{
-        Brokers: []string{"localhost:8097"},
-        Topic: "foos",
-    })
+  ```go
+      // example for oni.NewStream(cfg kafka.ReaderConfig)
+      stream := oni.NewStream(kafka.ReaderConfig{
+          Brokers: []string{"localhost:8097"},
+          Topic: "foos",
+      })
     ```
 
 ### Consumer
