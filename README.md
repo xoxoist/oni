@@ -177,6 +177,17 @@ func main() {
     // default consume mode is implicit
     consumer := oni.NewConsumer(stream)
     ```
+- `IConsumer.ErrorHandler(callbackFunc ErrorCallbackFunc)`
+    ```go
+    // set global error handler which will be invoked when oni.HandlerFunc returns error
+    // this function should be called before handler creation and only called once 
+    consumer.ErrorHandler(func (err error) {
+        if err != nil {
+            // do error handling logic such as logging
+            // or handle special error cases
+        }
+    })
+    ```
 - `IConsumer.Implicit()`
     ```go
     // set consume mode to implicit which means every message
@@ -192,7 +203,7 @@ func main() {
     consumer.Explicit()
     ```
 
-- `IConsumer.Group(keyGroup string) *IConsumer`
+- `IConsumer.Group(keyGroup string) *Consumer`
     ```go
     // create new group of consumer key event prefix, for example `event.notification.blast`
     // could be had last suffix like `email.channel` and `sms.channel` so your next handler
@@ -214,6 +225,21 @@ func main() {
     consumer.Handler("event.send.email", func (ctx oni.Context) error {
         // put business logic here
         return nil
+    })
+    ```
+- `IConsumer.Producer(name string, producerFunc ProducerFunc)`
+    ```go
+    // create producer that can be accessed by its name through oni.Context functions that
+    // allows business logic to access producer by the name and use it for sending message
+    // to targeted topic, can be defined multiple times and only created when producer get
+    // called by oni.Context function and closed after sent the message  
+    consumer.Producer("notification_producer", func() *kafka.Writer {
+        // you can define using *kafka.Writer struct or you can use templates from oni
+        // by returning this oni.BasicWriter(addr net.Addr, topic string) function.
+        return &kafka.Writer{
+            Addr:  kafka.TCP("localhost:8097"),
+            Topic: "notification",
+        }
     })
     ```
 

@@ -11,9 +11,9 @@ type IConsumer interface {
 	ErrorHandler(callbackFunc ErrorCallbackFunc)
 	Producer(name string, producerFunc ProducerFunc)
 	Group(keyGroup string) *Consumer
-	Run(ctx context.Context)
-	CloseConsumers() error
-	CloseProducers() error
+	run(ctx context.Context)
+	closeConsumers() error
+	closeProducers() error
 	Explicit()
 	Implicit()
 }
@@ -62,7 +62,7 @@ func (c *Consumer) ErrorHandler(callbackFunc ErrorCallbackFunc) {
 	c.callbackError = callbackFunc
 }
 
-func (c *Consumer) Run(ctx context.Context) {
+func (c *Consumer) run(ctx context.Context) {
 	var wg sync.WaitGroup
 	wg.Add(len(c.stream.handlers))
 	c.stream.ctx = ctx
@@ -72,10 +72,10 @@ func (c *Consumer) Run(ctx context.Context) {
 	wg.Wait()
 }
 
-func (c *Consumer) CloseConsumers() error {
+func (c *Consumer) closeConsumers() error {
 	return c.stream.closeConsumers()
 }
 
-func (c *Consumer) CloseProducers() error {
+func (c *Consumer) closeProducers() error {
 	return c.stream.closeProducers()
 }

@@ -26,7 +26,7 @@ func ConsumerOpt(consumers ...*Consumer) []*Consumer {
 
 func (r *Runner) Start() <-chan struct{} {
 	for _, consumer := range r.Consumers {
-		go consumer.Run(r.Context)
+		go consumer.run(r.Context)
 	}
 
 	wait := make(chan struct{})
@@ -56,11 +56,11 @@ func (r *Runner) Start() <-chan struct{} {
 
 				log.Printf("cleaning up process %d", sequence)
 
-				if err := c.CloseConsumers(); err != nil {
+				if err := c.closeConsumers(); err != nil {
 					log.Printf("consumer %d clean up failed: %s", sequence, err.Error())
 					return
 				}
-				if err := c.CloseProducers(); err != nil {
+				if err := c.closeProducers(); err != nil {
 					log.Printf("producer %d clean up failed: %s", sequence, err.Error())
 					return
 				}
