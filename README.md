@@ -159,13 +159,6 @@ func main() {
 ### API Examples
 
 ### Stream
-- `oni.NewConsumer(stream *oni.Stream) IConsumer`
-    ```go
-    // example for oni.NewConsumer(stream *oni.Stream)
-    // default consume mode is implicit
-    consumer := oni.NewConsumer(stream)
-    ```
-
 - `oni.NewStream(cfg kafka.ReaderConfig)`
     ```go
     // example for oni.NewStream(cfg kafka.ReaderConfig)
@@ -174,6 +167,8 @@ func main() {
         Topic: "foos",
     })
     ```
+
+
 
 ### Consumer
 
