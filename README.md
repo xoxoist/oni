@@ -159,6 +159,7 @@ func main() {
 ### API Examples
 
 ### Stream
+
 - `oni.NewStream(cfg kafka.ReaderConfig)`
     ```go
     // example for oni.NewStream(cfg kafka.ReaderConfig)
@@ -167,6 +168,7 @@ func main() {
         Topic: "foos",
     })
     ```
+  
 - `oni.NewStream(cfg kafka.ReaderConfig)`
     ```go
     // example for oni.NewStream(cfg kafka.ReaderConfig)
