@@ -168,6 +168,8 @@ func main() {
         Topic: "foos",
     })
     ```
+  
+- `no`
 
 ### Consumer
 
