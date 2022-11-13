@@ -171,10 +171,36 @@ func main() {
 
 ### Consumer
 
-- `oni.NewConsumer(stream *oni.Stream)`
+- `oni.NewConsumer(stream *oni.Stream) IConsumer`
     ```go
     // example for oni.NewConsumer(stream *oni.Stream)
+    // default consume mode is implicit
     consumer := oni.NewConsumer(stream)
+    ```
+- `IConsumer.Implicit()`
+    ```go
+    // set consume mode to implicit which means every message
+    /// received by *oni.Stream will be automatically ack or committed
+    // this function should be called before handler creation
+    consumer.Implicit()
+    ```
+- `IConsumer.Explicit()`
+    ```go
+    // set consume mode to explicit which means every message 
+    /// received by *oni.Stream will be ack or committed manually using Context.Ack()
+    // this function should be called before handler creation
+    consumer.Explicit()
+    ```
+  
+- `IConsumer.Group(keyGroup string) *Consumer`
+    ```go
+    // create new group of consumer key event prefix, for example `event.notification.blast`
+    // could be had last suffix like `email.channel` and `sms.channel` so your next handler
+    // should be had key event `email.channel` and `sms.channel` and actual handler event key
+    // should be like this
+    // `event.notification.blast.email.channel`
+    // `event.notification.blast.sms.channel`
+    notificationBlastEvent := consumer.Group("event.notification.blast")
     ```
 
 ### Context
