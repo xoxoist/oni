@@ -87,6 +87,7 @@ func main() {
 			"localhost:8099", // kafka brokers 3 you can only define one inside array
 		},
 		Topic: "foos", // topic you want to listen at
+        GroupID: "consumer-group-foos",
 	})
 	foosConsumer := oni.NewConsumer(stream)
 	foosConsumer.Handler(
@@ -166,6 +167,7 @@ func main() {
     stream := oni.NewStream(kafka.ReaderConfig{
         Brokers: []string{"localhost:8097"},
         Topic: "foos",
+        GroupID: "consumer-group-foos",
     })
     ```
   
