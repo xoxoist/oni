@@ -12,7 +12,7 @@ type ContextTestSuite struct {
 	suite.Suite
 }
 
-func TestTransformerTestSuite(t *testing.T) {
+func TestContextTestSuite(t *testing.T) {
 	suite.Run(t, new(ContextTestSuite))
 }
 
