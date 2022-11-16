@@ -309,3 +309,31 @@ func (suite *ContextTestSuite) TestNewContextGetProducerFunc() {
 		suite.Assert().Equal(oniCtx.GetProducer("producer_func_1").Topic, w.Topic)
 	})
 }
+
+func (suite *ContextTestSuite) TestReaderStats() {
+	suite.Run("TestReaderStats", func() {
+		ctx := context.Background()
+		consumer := NewConsumer(NewStream(kafka.ReaderConfig{
+			Brokers: []string{"localhost:8097"},
+			Topic:   "test-topic-11",
+			GroupID: "consumer-group-test",
+		}))
+
+		oniCtx := newContext(ctx, consumer.stream.reader, kafka.Message{}, nil)
+		suite.Assert().Equal(oniCtx.ReaderStats().Topic, "test-topic-11")
+	})
+}
+
+func (suite *ContextTestSuite) TestReaderConfig() {
+	suite.Run("TestReaderConfig", func() {
+		ctx := context.Background()
+		consumer := NewConsumer(NewStream(kafka.ReaderConfig{
+			Brokers: []string{"localhost:8097"},
+			Topic:   "test-topic-11",
+			GroupID: "consumer-group-test",
+		}))
+
+		oniCtx := newContext(ctx, consumer.stream.reader, kafka.Message{}, nil)
+		suite.Assert().Equal(oniCtx.ReaderConfig().GroupID, "consumer-group-test")
+	})
+}
