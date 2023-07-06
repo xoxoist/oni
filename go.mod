@@ -1,10 +1,10 @@
-module github.com/coffeehaze/oni
+module github.com/xoxoist/oni
 
-go 1.18
+go 1.19
 
 require (
-	github.com/segmentio/kafka-go v0.4.38
-	github.com/stretchr/testify v1.8.0
+	github.com/segmentio/kafka-go v0.4.40
+	github.com/stretchr/testify v1.8.4
 )
 
 require (
