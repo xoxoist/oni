@@ -1,13 +1,13 @@
 # Oni Kafka Framework
 
-<img align="right" width="159px" src="https://raw.githubusercontent.com/coffeehaze/asset/main/oni.png">
+<img align="right" width="159px" src="https://raw.githubusercontent.com/xoxoist/asset/main/oni.png">
 
-[![coffeehaze](https://circleci.com/gh/coffeehaze/oni.svg?style=svg)](https://github.com/coffeehaze/oni)
-[![codecov](https://img.shields.io/codecov/c/github/coffeehaze/oni.svg)](https://codecov.io/gh/coffeehaze/oni)
-[![Sourcegraph](https://sourcegraph.com/github.com/coffeehaze/oni/-/badge.svg)](https://sourcegraph.com/github.com/coffeehaze/oni?badge)
-[![Go Report Card](https://goreportcard.com/badge/github.com/coffeehaze/oni)](https://goreportcard.com/report/github.com/coffeehaze/oni)
-[![GoDoc](https://pkg.go.dev/badge/github.com/coffeehaze/oni?status.svg)](https://pkg.go.dev/github.com/coffeehaze/oni?tab=doc)
-[![License](http://img.shields.io/badge/license-mit-blue.svg)](https://raw.githubusercontent.com/coffeehaze/oni/main/LICENSE)
+[![xoxoist](https://circleci.com/gh/xoxoist/oni.svg?style=svg)](https://github.com/xoxoist/oni)
+[![codecov](https://img.shields.io/codecov/c/github/xoxoist/oni.svg)](https://codecov.io/gh/xoxoist/oni)
+[![Sourcegraph](https://sourcegraph.com/github.com/xoxoist/oni/-/badge.svg)](https://sourcegraph.com/github.com/xoxoist/oni?badge)
+[![Go Report Card](https://goreportcard.com/badge/github.com/xoxoist/oni)](https://goreportcard.com/report/github.com/xoxoist/oni)
+[![GoDoc](https://pkg.go.dev/badge/github.com/xoxoist/oni?status.svg)](https://pkg.go.dev/github.com/xoxoist/oni?tab=doc)
+[![License](http://img.shields.io/badge/license-mit-blue.svg)](https://raw.githubusercontent.com/xoxoist/oni/main/LICENSE)
 
 Oni is Kafka Framework written in Go (Golang). that makes you easy to consume and produce kafka messages using robust
 API wrapper for [kafka-go](https://github.com/segmentio/kafka-go) thanks to [segmentio](https://github.com/segmentio).
@@ -37,14 +37,14 @@ go version
 2. Get oni and kafka-go
 
 ```sh
-go get -u github.com/coffeehaze/oni
+go get -u github.com/xoxoist/oni
 go get -u github.com/segmentio/kafka-go
 ```
 
 3. Import oni
 
 ```go
-import "github.com/coffeehaze/oni"
+import "github.com/xoxoist/oni"
 ```
 
 ### Quick Start
@@ -67,7 +67,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/coffeehaze/oni"
+	"github.com/xoxoist/oni"
 	"github.com/your/projectname/model"
 	"github.com/segmentio/kafka-go"
 	"syscall"
